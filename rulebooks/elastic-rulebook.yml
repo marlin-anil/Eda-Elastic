@@ -1,0 +1,18 @@
+---
+- name: Handle Heartbeat Down Event
+  hosts: localhost
+  sources:
+    - name: webhook_elastic_heartbeat  
+      ansible.eda.webhook:
+        host: 0.0.0.0
+        port: 8080 
+  rules:
+    - name: Server is DOWN
+      condition: event.monitor.status == "down" and event.monitor.name == "Web Server Demo"
+      action:
+        run_job_template:
+          name: "Restart HTTPd"
+          organization: "Default"
+          extra_vars:
+            target_ip: "{{ event.url.domain }}"
+            error_msg: "{{ event.error.message }}"
