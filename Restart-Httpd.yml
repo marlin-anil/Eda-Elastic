@@ -6,8 +6,8 @@
   tasks:
     - name: Restart service httpd, in all cases
       ansible.builtin.service:
-      name: httpd
-      state: restarted
+        name: httpd
+        state: restarted
 
 - name: Restart Httpd
   hosts: centOS
@@ -16,5 +16,5 @@
   tasks:
     - name: Restart service httpd, in all cases
       ansible.builtin.service:
-      name: httpd
-      state: restarted
+        name: httpd
+        state: restarted
