@@ -3,7 +3,7 @@
   sources:
     - cloin.eda.elastic:
         elastic_host: 10.100.11.29
-        elastic_port: 9200
+        elastic_port: 9243
         elastic_username: admin
         elastic_password: P@ssw0rd
         elastic_index_pattern: .ds-heartbeat*
