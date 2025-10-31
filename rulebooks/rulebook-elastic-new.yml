@@ -1,0 +1,22 @@
+---
+- name: Elastic events
+  hosts: localhost
+  sources:
+    - ansible.eda.elasticsearch:
+        hosts:
+          - http://10.100.11.29:9200
+        username: admin
+        password: P@ssw0rd
+        index: ".ds-heartbeat*"
+        query: '{"term": {"monitor.id": "httpd-monitor"}}'
+        interval: 30
+  rules:
+    - name: Heartbeat monitor check
+      condition: event._source.monitor.status == "down"
+      action:
+        run_job_template:
+          name: "Restart HTTPd"
+          organization: Default
+      logging:
+        level: debug
+        message: "Condition met: {{ event._source.monitor.status }}"
