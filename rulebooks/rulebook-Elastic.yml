@@ -2,22 +2,22 @@
   hosts: localhost
   sources:
     - cloin.eda.elastic:
-        elastic_host: 10.100.11.29
+        elastic_host: 10.100.11.29, 10.100.11.139, 10.100.11.149
         elastic_port: 9200
         elastic_username: admin
         elastic_password: P@ssw0rd
-        elastic_index_pattern: .ds-heartbeat*
+        elastic_index_pattern: .ds-heartbeat-*, heartbeat
         query: |
           term:
             monitor.id: httpd-monitor
         interval: 30
   rules:
     - name: Heartbeat monitor check
-      condition: event.ecs is defined and event.state.status == "down"
+      condition: event.ecs is defined and monitor.status == "down"
       action:
         run_job_template:
           name: "Restart HTTPd"
           organization: Default
       logging:
         level: debug
-        message: "Condition met: {{ event.state.status }}"
+        message: "Condition met: {{ monitor.status }}"
