@@ -6,7 +6,7 @@
         elastic_port: 9200
         elastic_username: admin
         elastic_password: P@ssw0rd
-        elastic_index_pattern: .ds-heartbeat-*, heartbeat
+        elastic_index_pattern: .ds-heartbeat-*
         query: |
           term:
             monitor.id: httpd-monitor
