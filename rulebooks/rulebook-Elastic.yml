@@ -13,11 +13,11 @@
         interval: 30
   rules:
     - name: Heartbeat monitor check
-      condition: event.ecs is defined and event.monitor.status == "down"
+      condition: monitor.status == "down"
       action:
         run_job_template:
           name: "Restart HTTPd"
           organization: Default
       logging:
         level: debug
-        message: "Condition met: {{ event.monitor.status }}"
+        message: "Condition met: {{ monitor.status }}"
